@@ -1,0 +1,42 @@
+from flask import render_template, Flask, jsonify, g, request, redirect, url_for
+import sqlite3
+
+DATABASE = './db/test.db'
+app = Flask(__name__)
+
+def init_db():
+    with app.app_context():
+        db = get_db()
+        print db
+        with app.open_resource('schema.sql', mode='r') as f:
+            db.cursor().executescript(f.read())
+        db.commit()
+
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+        db.row_factory = sqlite3.Row
+    return db
+
+@app.route('/ex3', methods=['GET', 'POST'])
+def ex_3():
+    if request.method == 'GET':
+        sql = "select * from students"
+        db = get_db()
+        rv = db.execute(sql)
+        res = rv.fetchall()
+        rv.close()
+        return render_template('ex3.html', data=res)
+    else:
+        req_name = request.form.get('name')
+        sql = "insert into students (name) values ('%s')" % (req_name)
+        db = get_db()
+        db.execute(sql)
+        db.commit()
+        return redirect(url_for('ex_3'))
+    return ''
+
+if __name__ == '__main__':
+#    init_db()
+    app.run(debug=True , host='0.0.0.0', port= 8989)

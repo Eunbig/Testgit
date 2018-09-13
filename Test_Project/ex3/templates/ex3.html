@@ -1,0 +1,23 @@
+
+<body>
+  <p> Ex3 </p>
+  <table border="1">
+    <tr>
+      <th>번호</th>
+      <th>이름</th>
+    </tr>
+    {% for i in data %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ i['name'] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <br><br>
+  <img src="http://kstatic.inven.co.kr/upload/2017/05/03/bbs/i15922486444.jpg" width="350" height="350">
+  <form name='' action="/ex3" method="POST">
+  <input type=text name=name>
+  <input type=submit>
+  </form>
+</body>
+

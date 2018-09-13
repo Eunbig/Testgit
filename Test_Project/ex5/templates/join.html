@@ -1,0 +1,23 @@
+
+<body>
+  <table border="1">
+    <tr>
+      <th>번호</th>
+      <th>이름</th>
+    </tr>
+    {% for i in usrdata %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ i['usr_id'] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <br><br>
+  <form name="join_form" action="/join" method="POST">
+    ID : <input type=text name=usr_id><br>
+    PW : <input type=text name=usr_pw><br>
+    MAIL : <input type=text name=usr_mail><br>
+    <input type=submit>
+  </form>
+</body>
+
